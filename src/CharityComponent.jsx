@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { withStyles } from 'material-ui/styles';
 import Card, {
   CardHeader,
@@ -10,42 +9,14 @@ import Card, {
 import PropTypes from 'prop-types';
 import Collapse from 'material-ui/transitions/Collapse';
 import Typography from 'material-ui/Typography';
-import red from 'material-ui/colors/red';
 import { CircularProgress } from 'material-ui/Progress';
 import purple from 'material-ui/colors/purple';
 import Button from 'material-ui/Button';
 import DonationsContainer from './DonationsComponent';
+import styles from './styles';
+import charityResources from './utils/apiHelpers';
 
-const styles = theme => ({
-  card: {
-    maxWidth: 900,
-    margin: 'auto',
-  },
-  media: {
-    height: 194,
-  },
-  actions: {
-    display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  progress: {
-    'text-align': 'center',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-});
-
-class BenefitComponent extends React.Component {
+class CharityComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,19 +26,19 @@ class BenefitComponent extends React.Component {
     };
   }
   componentDidMount() {
-    axios
-      .get('https://api.justgiving.com/f26b1bad/v1/charity/183560/')
+    charityResources.getCharityInfo()
       .then((response) => {
         this.setState({ info: response.data });
       });
   }
 
   handleExpandClick = () => {
-    axios
-      .get('https://api.justgiving.com/f26b1bad/v1/charity/183560/donations')
-      .then((response) => {
-        this.setState({ donations: response.data.donations });
-      });
+    if (!this.state.expanded) {
+      charityResources.getDonationsInfo()
+        .then((response) => {
+          this.setState({ donations: response.data.donations });
+        });
+    }
     this.setState({ expanded: !this.state.expanded });
   };
 
@@ -115,7 +86,7 @@ class BenefitComponent extends React.Component {
   }
 }
 
-BenefitComponent.propTypes = {
+CharityComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(BenefitComponent);
+export default withStyles(styles)(CharityComponent);
