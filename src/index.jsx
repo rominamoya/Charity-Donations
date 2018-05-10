@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CharityComponent from './CharityComponent';
+import CharityContainer from './CharityContainer';
 
 const App = () => (
-  <CharityComponent />
+  <CharityContainer />
 );
 
 ReactDOM.render(

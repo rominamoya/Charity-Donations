@@ -1,8 +1,6 @@
-import red from 'material-ui/colors/red';
-
 const styles = theme => ({
   card: {
-    maxWidth: 900,
+    maxWidth: 500,
     margin: 'auto',
   },
   media: {
@@ -19,14 +17,15 @@ const styles = theme => ({
     }),
     marginLeft: 'auto',
   },
+  chip: {
+    margin: theme.spacing.unit / 2,
+    color: theme.palette.text.secondary,
+  },
   expandOpen: {
     transform: 'rotate(180deg)',
   },
   progress: {
     'text-align': 'center',
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 });
 

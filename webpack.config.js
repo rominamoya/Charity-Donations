@@ -1,38 +1,38 @@
 const webpack = require('webpack');
-const path = require("path");
-const DIST_DIR = path.resolve(__dirname, "dist");
-const SRC_DIR = path.resolve(__dirname, "src");
+const path = require('path');
 
-var config = {
-   entry: SRC_DIR + "/index.jsx",
-   output: {
-       path: DIST_DIR,
-       filename: "bundle.js"
-   },
-   performance: {
-    hints: false
+const DIST_DIR = path.resolve(__dirname, 'dist');
+const SRC_DIR = path.resolve(__dirname, 'src');
+
+const config = {
+  entry: `${SRC_DIR}/index.jsx`,
+  output: {
+    path: DIST_DIR,
+    filename: 'bundle.js',
   },
-    resolve: {
-      extensions: ["*", ".js", ".jsx",".es6"],
+  performance: {
+    hints: false,
   },
-   module: {
-       rules: [
-           {
-             test: /\.jsx?$/,
-             exclude: /(node_modules|bower_components)/,
-             include: SRC_DIR,
-             loader: "babel-loader",
-             query: {
-                 presets: ["react", "es2015", "stage-2"]
-             }
-           }
-           ,
-           {
-              test: /\.jsx?$/,
-              exclude: /node_modules/,
-              use: ['eslint-loader']
-           }
-       ]
-   },
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.es6'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        include: SRC_DIR,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-2'],
+        },
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: ['eslint-loader'],
+      },
+    ],
+  },
 };
 module.exports = config;
