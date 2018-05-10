@@ -9,7 +9,7 @@
     "build": "webpack && webpack-dev-server --content-base=dist --progress --config webpack.dev.js",
     "build:prod": "webpack && webpack-dev-server --content-base=dist --config webpack.prod.js",
     "lint": "eslint src --ext js --ext jsx",
-    "prepush": "npm run test",
+    "prepush": "jest",
     "babel": {
       "presets": [
         "react",
