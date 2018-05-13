@@ -1,10 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
-import DonationsComponent from '../DonationsComponent';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import CharityContainer from '../CharityContainer';
 import CharityInfoComponent from '../CharityInfoComponent';
-import * as charityResources from '../utils/apiHelpers';
+import DonationsComponent from '../DonationsComponent';
+
+const mockStore = configureMockStore([thunk]);
 
 const props = {
   info: {
@@ -46,32 +49,14 @@ const donations = [{
 
 describe('CharityContainer', () => {
   it('fetch response on #componentDidMount and render CharityInfoComponent correctly', () => {
-    sinon.stub(charityResources, 'getCharityInfo')
-      .callsFake(() => Promise.resolve({
-        data: result,
-      }));
-    const wrapper = mount(<CharityContainer {...props} />);
-
-    return charityResources.getCharityInfo()
-      .then(() => {
-        wrapper.update();
-        expect(wrapper.find(CharityInfoComponent).props().info).toEqual(result);
-      });
-  });
-
-  it('fetch response on #componentDidMount and render CharityInfoComponent correctly', () => {
-    sinon.stub(charityResources, 'getDonationsInfo')
-      .callsFake(() => Promise.resolve({
-        data: { donations },
-      }));
-
-    const wrapper = mount(<CharityContainer {...props} />);
-    wrapper.setState({ info: { currencyCode: 'GBP' } });
-    return charityResources.getDonationsInfo()
-
-      .then(() => {
-        wrapper.update();
-        expect(wrapper.find(DonationsComponent).props().donations).toEqual(donations);
-      });
+    const store = mockStore({
+      charityInfo: {
+        info: result,
+        donations,
+      },
+    });
+    const wrapper = mount(<Provider store={store}><CharityContainer {...props} /></Provider>);
+    expect(wrapper.find(CharityInfoComponent).props().info).toEqual(result);
+    expect(wrapper.find(DonationsComponent).props().donations).toEqual(donations);
   });
 });
