@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://rominamoya.github.io/Charity-Donations/",
   "scripts": {
     "start": "npm run build",
     "test": "jest  --watchAll",
     "build": "webpack && webpack-dev-server --content-base=dist --progress --config webpack.dev.js",
     "build:prod": "webpack && webpack-dev-server --content-base=dist --config webpack.prod.js",
     "lint": "eslint src --ext js --ext jsx",
+    "pre-deploy": "npm run start",
+    "deploy":"gh-pages -d dist",
     "prepush": "jest",
     "babel": {
       "presets": [
@@ -29,6 +32,7 @@
     "classnames": "^2.2.5",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "gh-pages": "^1.2.0",
     "husky": "^0.14.3",
     "material-ui": "^1.0.0-beta.41",
     "prop-types": "^15.6.1",
