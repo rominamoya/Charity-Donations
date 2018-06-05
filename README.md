@@ -46,4 +46,4 @@ $ npm run test
 ```
 ### Demo
 
-`https://rominamoya.github.io/Charity-Donations`
+[https://rominamoya.github.io/Charity-Donations](https://rominamoya.github.io/Charity-Donations)
